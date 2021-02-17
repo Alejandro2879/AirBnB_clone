@@ -7,7 +7,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def emptyline(self):
-        pass
+        """Print a new line"""
+        return False
 
     def do_quit(self, arg):
         'Quit command to exit the program\n'
