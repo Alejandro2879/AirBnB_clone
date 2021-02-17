@@ -43,3 +43,4 @@ class FileStorage:
                     self.__objects[key] = j_obj[key]
         except:
             pass
+
