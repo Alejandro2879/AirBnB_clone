@@ -5,7 +5,6 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
     """[class HBNBCommand]"""
-    intro = 'Welcome to the hbnb shell.   Type help or ? to list commands.\n'
     prompt = '(hbnb) '
 
     def emptyline(self):
