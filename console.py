@@ -6,12 +6,15 @@ class HBNBCommand(cmd.Cmd):
     intro = 'Welcome to the hbnb shell.   Type help or ? to list commands.\n'
     prompt = '(hbnb) '
 
+    def emptyline(self):
+        pass
+
     def do_quit(self, arg):
-        'Quit command to exit the program'
+        'Quit command to exit the program\n'
         return True
 
     def do_EOF(self, arg):
-        'Quit command to exit the program'
+        'Quit command to exit the program\n'
         return True
 
 
