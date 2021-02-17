@@ -11,6 +11,7 @@ import inspect
 BaseModel = models.base_model.BaseModel
 doc = models.base_models.__doc__
 
+
 class TestBaseModelDoc(unittest.testCase):
     """[Class to test docstring in BaseModel]
     """
@@ -19,7 +20,7 @@ class TestBaseModelDoc(unittest.testCase):
         """
         for path in ['models.base_model.py',
                      'test/test_models/test_base_model.py']:
-            with self.subTest(path = path):
+            with self.subTest(path=path):
                 err = pycodestyle.Checker(path).check_all()
                 self.assertEqual(err, 0)
 
@@ -38,7 +39,7 @@ class TestBaseModelDoc(unittest.testCase):
 
     def test_docsting_methods(self):
         for meth in self.funcs:
-            with self.subTest(function = meth):
+            with self.subTest(function=meth):
                 self.assertIsNot(meth[1].__doc__, None,
                                  "No docstring for {}".format(meth[0]))
                 self.assertTrue(len(meth[1].__doc__) > 1,
