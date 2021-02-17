@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 import cmd
-
+"""[]
+"""
 
 class HBNBCommand(cmd.Cmd):
- 
+    """[Pending information]
+    """
     prompt = '(hbnb) '
 
     def do_quit(self, arg):
