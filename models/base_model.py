@@ -2,6 +2,7 @@
 """[Module define the BaseModel class]
 """
 import uuid
+import models
 from datetime import datetime
 
 
@@ -31,6 +32,8 @@ class BaseModel:
         """[Method to update 'updated_at' attribute]
         """
         self.updated_at = datetime.now()
+        models.storage.save()
+        models.storage.new(self)
 
     def to_dict(self):
         """[Return all key : values of the instance]
