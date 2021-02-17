@@ -5,6 +5,7 @@ from datetime import datetime
 import models
 import uuid
 
+
 class BaseModel:
     """[BaseModel class]
     """
@@ -43,7 +44,6 @@ class BaseModel:
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
-        
 
     def to_dict(self):
         """[Return all key : values of the instance]
