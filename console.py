@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 import cmd
-"""[]
-"""
+
 
 class HBNBCommand(cmd.Cmd):
-    """[Pending information]
-    """
+    intro = 'Welcome to the hbnb shell.   Type help or ? to list commands.\n'
     prompt = '(hbnb) '
 
     def emptyline(self):
