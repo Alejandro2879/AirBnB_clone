@@ -8,7 +8,7 @@ class HBNBCommand(cmd.Cmd):
     """[class HBNBCommand]"""
     prompt = '(hbnb) '
 
-    valid_class = {'BaseModel': Basemodel}
+    valid_class = {'BaseModel': BaseModel}
 
     def emptyline(self):
         """Print a new line"""
