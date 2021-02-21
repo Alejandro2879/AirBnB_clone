@@ -5,7 +5,7 @@ from datetime import datetime
 import models
 import uuid
 
-time_fmt = '%Y-%m-%dT%H:%M:%S.%f'
+_time_fmt = '%Y-%m-%dT%H:%M:%S.%f'
 
 class BaseModel:
     """[BaseModel class]
@@ -19,7 +19,7 @@ class BaseModel:
                 if key != "__class__":
                     if key == 'created_at' or key == 'updated_at':
                         setattr(self, key, datetime.strptime(kwargs[key],
-                                                             time_fmt))
+                                                             _time_fmt))
                     else:
                         setattr(self, key, kwargs[key])
         else:
@@ -44,7 +44,7 @@ class BaseModel:
         """[Return all key : values of the instance]
         """
         new = self.__dict__.copy()
-        new['created_at'] = self.[created_at].isoformat()
-        new['updated_at'] = self.[updated_at].isoformat()
+        new['created_at'] = self[created_at].isoformat()
+        new['updated_at'] = self[updated_at].isoformat()
         new['__class__'] = self.__class__.__name__
         return (new)
