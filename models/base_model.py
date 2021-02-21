@@ -5,7 +5,6 @@ from datetime import datetime
 import models
 import uuid
 
-to_date = datetime.strptime
 time_fmt = '%Y-%m-%dT%H:%M:%S.%f'
 
 class BaseModel:
@@ -18,9 +17,11 @@ class BaseModel:
         if kwargs:
             for key in kwargs:
                 if key != "__class__":
-                    setattr(self, key, kwargs[key])
-            self.created_at = to_date(kwargs['created_at'], time_fmt)
-            self.updated_at = to_date(kwargs['updated_at'], time_fmt)
+                    if key == 'created_at' or key == 'updated_at':
+                        setattr(self, key, datetime.strptime(kwargs[key],
+                                                             time_fmt))
+                    else:
+                        setattr(self, key, kwargs[key])
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
