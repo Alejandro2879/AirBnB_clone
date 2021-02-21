@@ -5,6 +5,8 @@ from datetime import datetime
 import models
 import uuid
 
+to_date = datetime.strptime
+time_fmt = '%Y-%m-%dT%H:%M:%S.%f'
 
 class BaseModel:
     """[BaseModel class]
@@ -14,23 +16,16 @@ class BaseModel:
         """[Define initial values to attributes]
         """
         if kwargs:
-            for key, val in kwargs.items():
-                if key != '__class__':
-                    setattr(self, key, val)
-            if kwargs.get('created_at', None) and type(self.created_at) is str:
-                self.created_at = kwargs[created_at].isoformat()
-            else:
-                self.created_at = datetime.now()
-            if kwargs.get('updated_at', None) and type(self.updated_at) is str:
-                self.updated_at = kwargs[updated_at].isoformat()
-            else:
-                self.updated_at = kwargs[updated_at].isoformat()
-            if kwargs.get('id', None) is None:
-                self.id = str(uuid.uuid4())
+            for key in kwargs:
+                if key != "__class__":
+                    setattr(self, key, kwargs[key])
+            self.created_at = to_date(kwargs['created_at'], time_fmt)
+            self.updated_at = to_date(kwargs['updated_at'], time_fmt)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            models.storage.new(self)
 
     def __str__(self):
         """[String format]
@@ -42,18 +37,13 @@ class BaseModel:
         """[Method to update 'updated_at' attribute]
         """
         self.updated_at = datetime.now()
-        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
         """[Return all key : values of the instance]
         """
         new = self.__dict__.copy()
-        if 'created_at' in new:
-            new['created_at'] = new['created_at'].isoformat()
-        if 'updated_at' in new:
-            new['updated_at'] = new['updated_at'].isoformat()
+        new['created_at'] = self.created_at.isoformat()
+        new['updated_at'] = self.updated_at.isoformat()
         new['__class__'] = self.__class__.__name__
-        if '_sa_instance_state' in new:
-            del new['_sa_instance_state']
-        return new
+        return (new)
