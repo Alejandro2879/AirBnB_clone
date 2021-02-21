@@ -5,6 +5,8 @@ import json
 from models.base_model import BaseModel
 import models
 
+__valid_models = {'BaseModel': BaseModel}
+
 
 class FileStorage:
     """[serializes instances to a JSON file
@@ -16,20 +18,12 @@ class FileStorage:
     def all(self, cls=None):
         """[Returns the dictionary __objects]
         """
-        if cls is not None:
-            new = {}
-            for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    new[key] = value
-            return (new)
-        return self.__objects
+        return (self.__objects)
 
     def new(self, obj):
         """[Sets in __objects the obj with key <obj class name>.id]
         """
-        if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
-            self.__objects[key] = obj
+        self.__objects[str(obj.__class__.__name__) + '.' + str(obj.id)] = obj
 
     def save(self):
         """[Serializes __objects to the JSON file (path: __file_path)]
@@ -37,16 +31,18 @@ class FileStorage:
         j_obj = {}
         for key in self.__objects:
             j_obj[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, 'w') as doc:
-            json.dump(j_obj, doc)
+
+        with open(self.__file_path, 'w') as n_file:
+            json.dump(j_obj, n_file)
 
     def reload(self):
         """[Deserializes the JSON file to __objects]
         """
-        try:
-            with open(self.__file_path, 'r') as doc:
-                j_obj = json.load(doc)
-            for key in j_obj:
-                self.__objects[key] = j_obj[key]["__class__"](**j_obj[key])
-        except:
-            pass
+        if os.path.exists(type(self).__file_path):
+            with open(type(self).__file_path) as n_file:
+                json_f = json.load(n_file)
+
+            for key in json_f:
+                new = json_f[key]['__class__']
+                type(self).__objects[key] = type(self).__valid_models[new](
+                    **json_f[key])
