@@ -4,8 +4,8 @@
 import json
 from models.base_model import BaseModel
 import models
+import os.path
 
-__valid_models = {'BaseModel': BaseModel}
 
 
 class FileStorage:
@@ -15,22 +15,32 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
+    """List of valid models"""
+    __valid_models = {'BaseModel': BaseModel}
+
+    def valid_models(self):
+        """[return dictionary __objects]
+        """
+        return (type(self).__valid_models)
+
     def all(self, cls=None):
         """[Returns the dictionary __objects]
         """
-        return (self.__objects)
+        return (type(self).__objects)
 
     def new(self, obj):
         """[Sets in __objects the obj with key <obj class name>.id]
         """
-        self.__objects[str(obj.__class__.__name__) + '.' + str(obj.id)] = obj
+        if obj:
+            type(self).__objects[str(obj.__class__.__name__) + '.' + obj.id] = obj
 
     def save(self):
         """[Serializes __objects to the JSON file (path: __file_path)]
         """
-        j_obj = {}
-        for key in self.__objects:
-            j_obj[key] = self.__objects[key].to_dict()
+        j_obj = type(self).__objects.copy()
+
+        for key in j_obj:
+            j_obj[key] = j_obj[key].to_dict()
 
         with open(self.__file_path, 'w') as n_file:
             json.dump(j_obj, n_file)
