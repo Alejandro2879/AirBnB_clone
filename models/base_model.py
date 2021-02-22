@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """[Module define the BaseModel class]
 """
+
 from datetime import datetime
 import models
 import uuid
 
 _time_fmt = "%Y-%m-%dT%H:%M:%S.%f"
+
 
 class BaseModel:
     """[BaseModel class]
