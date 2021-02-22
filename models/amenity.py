@@ -8,5 +8,4 @@ from models.base_model import BaseModel
 class Amenity(BaseModel):
     """[Create an amenity instance and inherits from BaseModel]
     """
-    
     name = ""
