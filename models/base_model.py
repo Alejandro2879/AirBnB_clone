@@ -5,7 +5,7 @@ from datetime import datetime
 import models
 import uuid
 
-_time_fmt = '%Y-%m-%dT%H:%M:%S.%f'
+_time_fmt = "%Y-%m-%dT%H:%M:%S.%f"
 
 class BaseModel:
     """[BaseModel class]
