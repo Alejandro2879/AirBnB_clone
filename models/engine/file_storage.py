@@ -7,7 +7,6 @@ import models
 import os.path
 
 
-
 class FileStorage:
     """[serializes instances to a JSON file
         and deserializes JSON file to instances]
@@ -32,7 +31,8 @@ class FileStorage:
         """[Sets in __objects the obj with key <obj class name>.id]
         """
         if obj:
-            type(self).__objects[str(obj.__class__.__name__) + '.' + obj.id] = obj
+            type(self).__objects[str(obj.__class__.__name__) + '.' +
+                                 obj.id] = obj
 
     def save(self):
         """[Serializes __objects to the JSON file (path: __file_path)]
